@@ -70,10 +70,21 @@ return {
 			-- LSP servers to install (see list here: https://github.com/williamboman/mason-lspconfig.nvim#available-lsp-servers )
 			local servers = {
 				bashls = {},
-				-- clangd = {},
+				clangd = {
+					cmd = {
+						"clangd",
+						"--offset-encoding=utf-16",
+					},
+				},
 				cssls = {},
 				gleam = {},
-				gopls = {},
+				gopls = {
+					settings = {
+						gopls = {
+							gofumpt = true,
+						},
+					},
+				},
 				graphql = {},
 				html = {},
 				jsonls = {},
@@ -91,10 +102,22 @@ return {
 				rust_analyzer = {},
 				solidity = {},
 				sqlls = {},
-				tailwindcss = {
-					-- filetypes = { "reason" },
-				},
+				-- tailwindcss = {},
 				tsserver = {
+					init_options = {
+						plugins = {
+							{
+								name = "@vue/typescript-plugin",
+								location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+								languages = { "javascript", "typescript", "vue" },
+							},
+						},
+					},
+					filetypes = {
+						"javascript",
+						"typescript",
+						"vue",
+					},
 					settings = {
 						experimental = {
 							enableProjectDiagnostics = true,
@@ -107,6 +130,10 @@ return {
 						),
 					},
 				},
+				terraformls = {
+					filetypes = { "terraform", "tf", "tfvars" },
+				},
+				volar = {},
 				yamlls = {},
 			}
 
@@ -150,9 +177,11 @@ return {
 				require("lspconfig")[name].setup({
 					capabilities = default_capabilities,
 					filetypes = config.filetypes,
+					init_options = config.init_options,
 					handlers = vim.tbl_deep_extend("force", {}, default_handlers, config.handlers or {}),
 					on_attach = on_attach,
 					settings = config.settings,
+					cmd = config.cmd,
 				})
 			end
 
@@ -167,6 +196,10 @@ return {
 					-- formatting
 					formatting.prettierd.with({
 						filetypes = {
+							"vue",
+							"typescript",
+							"css",
+
 							"javascript",
 							"javascriptreact",
 							"typescript",
@@ -183,31 +216,35 @@ return {
 							"handlebars",
 						},
 					}),
+					-- formatting.pretterd,
 					formatting.stylua,
 
+					-- C/C++
+					formatting.clang_format,
+
 					-- Go
-					formatting.gofumpt,
+					-- formatting.gofumpt,
 
 					-- Python
 					formatting.black,
 					formatting.isort,
 
 					-- Rust
-					formatting.rustfmt,
+					-- formatting.rustfmt,
 
 					-- diagnostics
-					diagnostics.eslint_d.with({
-						condition = function(utils)
-							return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json" })
-						end,
-					}),
+					-- diagnostics.eslint_d.with({
+					-- 	condition = function(utils)
+					-- 		return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json" })
+					-- 	end,
+					-- }),
 
 					-- code actions
-					code_actions.eslint_d.with({
-						condition = function(utils)
-							return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json" })
-						end,
-					}),
+					-- code_actions.eslint_d.with({
+					-- 	condition = function(utils)
+					-- 		return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json" })
+					-- 	end,
+					-- }),
 				},
 			})
 

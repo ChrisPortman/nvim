@@ -145,7 +145,7 @@ nnoremap("<leader>rw", ":RotateWindows<cr>", { desc = "[R]otate [W]indows" })
 nnoremap("gx", ":sil !open <cWORD><cr>", { silent = true })
 
 -- TSC autocommand keybind to run TypeScripts tsc
-nnoremap("<leader>tc", ":TSC<cr>", { desc = "[T]ypeScript [C]ompile" })
+-- nnoremap("<leader>tc", ":TSC<cr>", { desc = "[T]ypeScript [C]ompile" })
 
 -- Harpoon keybinds --
 -- Open harpoon ui
@@ -369,5 +369,22 @@ end, { desc = "Close buffer" })
 nnoremap("<leader>X", function()
 	require("bufferline.commands").close_others()
 end, { desc = "Close other buffers" })
+
+-- neotest
+nnoremap("<leader>tt", function()
+	local neotest = require("neotest")
+	neotest.run.run()
+	require("coverage").load(true)
+end, { desc = "[T]est [T]est (nearest test function)" })
+
+nnoremap("<leader>tf", function()
+	local neotest = require("neotest")
+	neotest.run.run(vim.fn.expand("%"))
+	require("coverage").load(true)
+end, { desc = "[T]est [F]ile (all tests in file)" })
+
+nnoremap("<leader>tc", function()
+	require("coverage").toggle()
+end, { desc = "Toggle [T]est [C]overage" })
 
 return M

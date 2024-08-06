@@ -3,13 +3,13 @@ vim.opt.nu = true
 vim.opt.rnu = true
 
 -- Set tabs to 2 spaces
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 -- Enable auto indenting and set it to spaces
 vim.opt.smartindent = true
-vim.opt.shiftwidth = 2
 
 -- Enable smart indenting (see https://stackoverflow.com/questions/1204149/smart-wrap-in-vim)
 vim.opt.breakindent = true
@@ -52,7 +52,7 @@ vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 
 -- Enable access to System Clipboard
-vim.opt.clipboard = "unnamed,unnamedplus"
+vim.opt.clipboard = "unnamedplus"
 
 -- Enable cursor line highlight
 vim.opt.cursorline = true
