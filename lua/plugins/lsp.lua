@@ -82,6 +82,9 @@ return {
 					settings = {
 						gopls = {
 							gofumpt = true,
+							buildFlags = {
+								"-tags=integration",
+							},
 						},
 					},
 				},
@@ -103,7 +106,7 @@ return {
 				solidity = {},
 				sqlls = {},
 				-- tailwindcss = {},
-				tsserver = {
+				ts_ls = {
 					init_options = {
 						plugins = {
 							{
@@ -228,23 +231,6 @@ return {
 					-- Python
 					formatting.black,
 					formatting.isort,
-
-					-- Rust
-					-- formatting.rustfmt,
-
-					-- diagnostics
-					-- diagnostics.eslint_d.with({
-					-- 	condition = function(utils)
-					-- 		return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json" })
-					-- 	end,
-					-- }),
-
-					-- code actions
-					-- code_actions.eslint_d.with({
-					-- 	condition = function(utils)
-					-- 		return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json" })
-					-- 	end,
-					-- }),
 				},
 			})
 
